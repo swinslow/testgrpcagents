@@ -1,0 +1,4 @@
+SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+
+To generate protobuf Go file (see https://grpc.io/docs/tutorials/basic/go.html):
+  protoc -I agent/ agent/agent.proto --go_out=plugins=grpc:agent

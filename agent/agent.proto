@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+syntax = "proto3";
+
+package agent;
+
+// Interface provided by a GRPC Agent server.
+service Agent {
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+
+    rpc JobStart(JobStartRequest) returns (JobStartResponse);
+
+    rpc JobStatus(JobStatusRequest) returns (JobStatusResponse);
+
+    rpc JobCancel(JobCancelRequest) returns (JobCancelResponse);
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    string agentName = 1;
+    string agentVersion = 2;
+    string health = 3;
+}
+
+message JobStartRequest {
+    uint64 jobID = 1;
+    string directoryToAnalyze = 2;
+    string jobOutputFilename = 3;
+}
+
+message JobStartResponse {
+    uint64 jobID = 1;
+    bool willStart = 2;
+    string willStartStatus = 3;
+}
+
+message JobStatusRequest {
+    uint64 jobID = 1;
+}
+
+message JobStatusResponse {
+    uint64 jobID = 1;
+    string jobStatus = 2;
+    uint64 secondsElapsed = 3;
+}
+
+message JobCancelRequest {
+    uint64 jobID = 1;
+}
+
+message JobCancelResponse {
+    uint64 jobID = 1;
+    bool willCancel = 2;
+    string willCancelStatus = 3;
+}
